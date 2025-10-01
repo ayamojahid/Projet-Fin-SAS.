@@ -46,7 +46,9 @@ void afficherStats(void);
 void rechercherProduitNom(void);
 
 void rechercherProduitCategorie(void);
-void trierParPrix(void);
+void trierParPrixDecroissant(void);
+void trierParPrixCroissant(void);
+
 void trierParNom(void);
 void detailsProduit(void);
 void afficherCatalogue(void);

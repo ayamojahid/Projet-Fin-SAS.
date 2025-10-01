@@ -15,7 +15,7 @@ void MainMenu(void) {
         printf("0.  Quitter l'application\n");
         printf("Votre choix : ");
         if (scanf("%d", &choix) != 1) { 
-        printf("Entrée invalide. On quitte.\n");
+        printf("Entree invalide. On quitte.\n");
         return;
         }
 
@@ -59,9 +59,10 @@ void menuProduits(void) {
         printf("1. Afficher tous les produits\n");
         printf("2. Rechercher un produit par nom\n");
         printf("3. Rechercher un produit par categorie\n");
-        printf("4. Trier les produits par prix\n");
-        printf("5. Trier les produits par nom\n");
-        printf("6. Details d’un produit\n");
+        printf("4. Trier les produits par prix croissant\n");
+        printf("5. Trier les produits par prix decroissant\n");
+        printf("6. Trier les produits par nom\n");
+        printf("7. Details d’un produit\n");
         printf("0. Retour\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
@@ -70,9 +71,10 @@ void menuProduits(void) {
             case 1: afficherCatalogue(); break;
             case 2: rechercherProduitNom(); break;
             case 3: rechercherProduitCategorie(); break;
-            case 4: trierParPrix(); break;
-            case 5: trierParNom(); break;
-            case 6: detailsProduit(); break;
+            case 4: trierParPrixCroissant(); break;
+            case 5: trierParPrixDecroissant(); break;
+            case 6: trierParNom(); break;
+            case 7: detailsProduit(); break;
             case 0: break;
             default: printf("Choix invalide !\n");
         } 
@@ -182,24 +184,24 @@ Produit prod[10] = {
 
 
 
-void afficherCatalogue(void) {    
+
+  void afficherCatalogue(void) {
     printf("\n=== CATALOGUE DES PRODUITS ===\n\n");
-    printf("ID | Nom | Categorie | Prix | Stock | Description\n");
-    printf("-------------------------------------------------\n");
+    printf("ID | Nom        | Prix      | Stock\n");
+    printf("------------------------------------\n");
 
     for (int i = 0; i < 10; i++) {
-        printf("%d | %s | %s | %.2f dh | %d | %s\n",
-            prod[i].idProduit,
-            prod[i].nom,
-            prod[i].caterogie,
-            prod[i].prix,
-            prod[i].stock,
-            prod[i].description
-        );
+        printf("%d | %-10s | %.2f dh | %d\n",
+               prod[i].idProduit,
+               prod[i].nom,
+               prod[i].prix,
+               prod[i].stock);
     }
 }
+    
 
-void rechercherProduitNom() {
+
+void rechercherProduitNom(void) {
 char recherche[30];
 int trouve=0;
  printf("\n=== RECHERCHE PRODUIT PAR NOM ===\n");
@@ -210,12 +212,7 @@ scanf("%s", recherche);
     if (strcasecmp(prod[i].nom, recherche) == 0) {
     printf("\nle produit est  trouve \n");
     printf("ID: %d\nNom: %s\nCategorie: %s\nPrix: %.2f dh\nStock: %d\nDescription: %s\n" ,
-        prod[i].idProduit,
-        prod[i].nom,
-        prod[i].caterogie,
-        prod[i].prix,
-        prod[i].stock,
-        prod[i].description
+    prod[i].idProduit, prod[i].nom,prod[i].caterogie,prod[i].prix,prod[i].stock,prod[i].description
     );
     trouve=1;
     break;
@@ -225,24 +222,19 @@ scanf("%s", recherche);
      }
 
 
-     void rechercherProduitCategorie() {
+     void rechercherProduitCategorie(void) {
     char recherche[30];
     int trouve = 0;
 
     printf("\n=== RECHERCHE PRODUIT PAR CATEGORIE ===\n");
     printf("Entrez la categorie a rechercher : ");
-    scanf("%s", recherche);   // lire catégorie recherchée
+    scanf("%s", recherche);   
 
     for (int i = 0; i < 10; i++) {
-        if (strcmp(prod[i].caterogie, recherche) == 0) {
+        if (strcasecmp(prod[i].caterogie, recherche) == 0) {
             printf("\nProduit trouve !\n");
             printf("ID: %d\nNom: %s\nCategorie: %s\nPrix: %.2f dh\nStock: %d\nDescription: %s\n",
-                prod[i].idProduit,
-                prod[i].nom,
-                prod[i].caterogie,   
-                prod[i].prix,
-                prod[i].stock,
-                prod[i].description
+         prod[i].idProduit, prod[i].nom, prod[i].caterogie,  prod[i].prix, prod[i].stock,prod[i].description
             );
             trouve = 1;
         }
@@ -253,8 +245,115 @@ scanf("%s", recherche);
 }
 
 
-void trierParPrix() {}
-void trierParNom() {}
-void detailsProduit() {}
-void acheterProduit(void) {}
+void trierParPrixCroissant() {
+Produit temps;
+for(int i =0; i<10-1 ; i++) {
+    for (int j = 0; j < 10-1; j++)
+    {
+    if(prod[j].prix<prod[j+1].prix) {
+    temps=prod[j];
+    prod[j]=prod[j+1];
+    prod[j+1]=temps;
+    }
+    }
+    
+}
+       printf("\n=== PRODUITS TRIES PAR PRIX DECROISSANT ===\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d | %s | %s | %.2f dh | Stock: %d\n",
+        prod[i].idProduit, prod[i].nom, prod[i].caterogie, prod[i].prix, prod[i].stock);
+} }
+
+
+
+void trierParPrixDecroissant(void){
+Produit temps;
+for(int i=0 ; i<10-1 ;i++) {
+    for(int j=0 ; j<10-1;j++) {
+        if(prod[j].prix>prod[j+1].prix) {
+            temps=prod[j];
+            prod[j]=prod[j+1];
+            prod[j+1]=temps;
+        }
+    }
+}
+for (int i = 0; i < 10; i++)
+{
+      printf("\n=== PRODUITS TRIES PAR PRIX CROISSANT ===\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d | %s | %s | %.2f dh | Stock: %d\n",
+prod[i].idProduit, prod[i].nom, prod[i].caterogie, prod[i].prix, prod[i].stock); }
+}
+}
+
+void trierParNom(void) {
+    Produit temp;
+    for (int i = 0; i < 10 - 1; i++) {
+        for (int j = 0; j < 10 - i - 1; j++) {
+            if (strcmp(prod[j].nom, prod[j + 1].nom) > 0) {
+                temp = prod[j];
+                prod[j] = prod[j + 1];
+                prod[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\n=== PRODUITS TRIES PAR NOM (A-Z) ===\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d | %s | %s | %.2f dh | Stock: %d\n",
+    prod[i].idProduit, prod[i].nom, prod[i].caterogie,prod[i].prix, prod[i].stock);
+    }
+}
+
+
+void detailsProduit() { {
+    printf("\n=== DETAILS COMPLETS DES PRODUITS ===\n\n");
+
+    for (int i = 0; i < 10; i++) {
+        printf("ID          : %d\n", prod[i].idProduit);
+        printf("Nom         : %s\n", prod[i].nom);
+        printf("Categorie   : %s\n", prod[i].caterogie);
+        printf("Prix        : %.2f dh\n", prod[i].prix);
+        printf("Stock       : %d\n", prod[i].stock);
+        printf("Description : %s\n", prod[i].description);
+    }
+}
+}
+
+void acheterProduitSimple(void) {
+    int choix;
+    printf("\n=== ACHAT DE PRODUIT ===\n");
+    printf("Entrez l'ID du produit : ");
+    scanf("%d", &choix);
+
+
+    if (choix < 1 || choix > 10) {
+        printf(" Produit invalide.\n");
+        return;
+    }
+
+    if (prod[choix-1].stock < 1) {
+        printf(" Stock epuise.\n");
+        return;
+    }
+
+    float prix = prod[choix-1].prix;
+
+   
+    if (cl[0].solde < prix) {
+        printf(" Solde insuffisant.\n");
+        return;
+    }
+
+    
+    cl[0].solde = cl[0].solde - prix;
+    prod[choix-1].stock = prod[choix-1].stock - 1;
+
+    
+    printf(" Achat a reussi !\n");
+    printf("Vous avez achete 1 x %s pour %.2f dh\n", prod[choix-1].nom, prix);
+    printf("Nouveau solde : %.2f dh\n", cl[0].solde);
+    printf("Stock restant : %d\n", prod[choix-1].stock);
+}
+
 void afficherStats(void) {}
