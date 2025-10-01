@@ -21,6 +21,12 @@ typedef struct {
 
 }Produit;
 
+typedef struct {
+    char nomProduit[30];
+    int quantiteHistorique;
+    float prixTotal;
+} Achat;
+
 void MainMenu(void);
 
 void menuProfil(void); 
@@ -31,7 +37,7 @@ void menuProduits(void);
 
 void creerProfil(void); 
 
-void consulterProfil(void );
+void AfficherProfil(void );
 
 void modifierProfil(void); 
 
@@ -41,18 +47,21 @@ void consulterSolde(void);
 
 void acheterProduit(void);
 
-void afficherStats(void); 
 
 void rechercherProduitNom(void);
 
 void rechercherProduitCategorie(void);
+
 void trierParPrixDecroissant(void);
+
 void trierParPrixCroissant(void);
 
 void trierParNom(void);
+
 void detailsProduit(void);
+
 void afficherCatalogue(void);
 
-
+void statistiques(void);
 
 #endif
