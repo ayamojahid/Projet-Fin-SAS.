@@ -20,7 +20,8 @@ void MainMenu(void)
         if (scanf("%d", &choix) != 1)
         {
             printf("entree n'est valide \n");
-            return;
+            while (getchar() != '\n'); 
+            choix = -1;
         }
 
         switch (choix)
@@ -61,7 +62,12 @@ void menuProfil(void)
         printf("2. maodifier le profil\n");
         printf("0. retour\n");
         printf("votre choix : ");
-        scanf("%d", &choix);
+      if (scanf("%d", &choix) != 1) {
+    printf("entree non valide, reessayez.\n");
+    while (getchar() != '\n'); 
+    choix = -1;
+}
+
 
         switch (choix)
         {
@@ -84,7 +90,7 @@ void menuProduits(void)
     int choix;
     do
     {
-        printf("\n CATALOGUE DES PRODUITS \n");
+        printf("\n MENU PRODUITS \n");
         printf("1. afficher tous les produits\n");
         printf("2. rechercher un produit par nom\n");
         printf("3. rechercher un produit par categorie\n");
@@ -133,9 +139,9 @@ void creerProfil(void)
 {
     printf("\n CREATION DE PROFIL \n");
     printf("veuillez entrer votre nom : ");
-    scanf(" %s", cl.nom);
+    scanf(" %[^\n]", cl.nom);
     printf("veullez entrer votre prenom : ");
-    scanf("%s", cl.prenom);
+    scanf(" %[^\n]", cl.prenom);
     sprintf(cl.email, "%s.%s@gmail.com", cl.nom, cl.prenom);
     cl.idClient = 1;
     cl.solde = 0;
@@ -159,9 +165,9 @@ void modifierProfil(void)
 
     printf("\n MODIFICATION DE PROFIL \n");
     printf("le nouveau nom : ");
-    scanf("%s", cl.nom);
+    scanf(" %[^\n]", cl.nom);
     printf("le nouveau prenom : ");
-    scanf("%s", cl.prenom);
+    scanf(" %[^\n]", cl.prenom);
     sprintf(cl.email, "%s.%s@gmail.com", cl.nom, cl.prenom);
 }
 
@@ -236,7 +242,7 @@ void afficherCatalogue(void)
     for (int i = 0; i < 10; i++)
     {
         printf("%d | %s | %.2f dh | %d\n",
-               prod[i].idProduit, prod[i].nom, prod[i].prix, prod[i].stock);
+   prod[i].idProduit, prod[i].nom, prod[i].prix, prod[i].stock);
     }
 }
 
@@ -269,17 +275,17 @@ void detailsProduit()
 
 void rechercherProduitNom(void)
 {
-    char recherche[30];
+    char rechercheID[30];
     int trouve = 0;
     printf("\n RECHERCHE PRODUIT PAR NOM \n");
     printf("entrez le nom du produit a rechercher :  ");
-    scanf("%s", recherche);
-    printf("%s", recherche);
+    scanf(" %[^\n]", rechercheID);
+    printf("%s", rechercheID);
     for (int i = 0; i < 10; i++)
     {
-        if (strcasecmp(prod[i].nom, recherche) == 0)
+        if (strcasecmp(prod[i].nom, rechercheID) == 0)
         {
-            printf("\n le produit est  trouve \n");
+            printf("\n      le produit est  trouve \n");
             printf("ID: %d\nnom: %s\ncategorie: %s\nprix: %.2f dh\nstock: %d\ndescription: %s\n",
                    prod[i].idProduit, prod[i].nom, prod[i].caterogie, prod[i].prix, prod[i].stock, prod[i].description);
             trouve = 1;
@@ -297,7 +303,7 @@ void rechercherProduitCategorie(void)
 
     printf("\n RECHERCHE PRODUIT PAR CATEGORIE \n");
     printf("Entrez la categorie a rechercher : ");
-    scanf("%s", recherche);
+    scanf(" %[^\n]", recherche);
 
     for (int i = 0; i < 10; i++)
     {
@@ -383,7 +389,7 @@ void trierParNom(void)
         printf("%d | %s | %s | %.2f dh | Stock: %d\n",
                prod[i].idProduit, prod[i].nom, prod[i].caterogie, prod[i].prix, prod[i].stock);
     }
-}
+} 
 
 
 
@@ -438,7 +444,7 @@ if (index == -1) {
 }
 
  float prix = prod[index].prix * quantiteProduit;
-if (cl.solde < prix)
+if (cl.solde < prix) 
 {
     printf("\n desole le solde est insuffisant");
     return;
@@ -454,7 +460,6 @@ printf("\nstock restee est : %d\n", prod[index].stock);
 char ligne[200];
 sprintf(ligne, "%d  %s  %.2f dh\n", quantiteProduit, prod[index].nom, prix);
 strcat(historique, ligne);
-
 
 
 }
